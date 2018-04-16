@@ -1,0 +1,59 @@
+<html>
+<head>
+  <title>Meal Planning Application</title>
+  <link rel="stylesheet" href="styles.css"></link>
+</head>
+<body ng-app = "mealApp" ng-controller = "mealController">
+  <h1>Meal Planning Application</h1>
+  <div class="topnav">
+    <div class="search-container">
+     <form  ng-submit="myFunc()">
+       <input name = "keyword" type = "text" ng-model = "keyword" required placeholder="Search.." >
+       <input type="submit" value="Search Recipe" id="searchbutton"> 
+    </form>
+  </div>
+ </div>
+
+<ul class="tabs  primary-nav">
+  <li class="tabs__item">
+    <a ng-click="toggleResults()" class="tabs__link">Click for Results</a>
+  </li>
+  <li class="tabs__item">
+    <a ng-click="toggleMeals()" class="tabs__link">Click for Meals</a>
+  </li>
+</ul>
+
+<div id="results" ng-show="results">
+  <h2>{{ myrecipes}}</h2>
+  <table>
+    <tr ng-repeat = "recipe in recipes.results">
+      <td class="imagecol"><img ng-src="{{ recipe.thumbnail || 'recipe-default-image.png' }}" ></td>
+      <td><p style="font-weight: bold;">{{ recipe.title }}</p>
+       <p>Ingredients: {{ recipe.ingredients }}</p>
+       <p><a href='{{ recipe.href }}' target="_blank">{{ recipe.href }} </a>
+        <br><br><button class="add" type="button" ng-click="addToMeal(recipe)">Add to Meals</button></p>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div id="meals" ng-show="meals">
+ <h2>{{ mymeals}}</h2>
+ <table>
+  <tr ng-repeat = "recipe in mealItems">
+   <td class="imagecol"><img ng-src="{{ recipe.thumbnail || 'recipe-default-image.png' }} "></td>
+   <td><p style="font-weight: bold;">{{ recipe.title }}
+     <p> Ingredients: {{ recipe.ingredients }}
+       <p><a href='{{ recipe.href }}'>{{ recipe.href }} </a>
+        <br><br><button type="button" class="rem" ng-click="removeMeal($index)">Remove Meal</button>
+      </td>
+
+    </tr>
+  </table>
+  <p> {{ errortext}} </p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
